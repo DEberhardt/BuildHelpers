@@ -102,7 +102,7 @@ Describe 'Step-Version' {
 
     Context 'By Pipeline' {
             It 'Should increment the Revision level' {
-            $result = [version]"1.1.1" | Step-Version @Verbose Revision
+            $result = [version]"1.1.1" | Step-Version @Verbose -By Revision
             $result | Should Be 1.1.1.1
         }
         
