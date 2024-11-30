@@ -43,7 +43,7 @@ function Step-Version {
 
         # Version section to step
         [Parameter(Position=1)]
-        [ValidateSet("Major", "Minor", "Build","Patch")]
+        [ValidateSet("Major", "Minor", "Build", "Patch", "Revision")]
         [Alias("Type")]
         [string]
         $By = "Patch"
@@ -54,7 +54,7 @@ function Step-Version {
         $major = $Version.Major
         $minor = $Version.Minor
         $build = $Version.Build
-        $patch = $Version.Revision
+        $revision = $Version.Revision
 
         switch ($By) {
             "Major" { $major++
@@ -64,11 +64,11 @@ function Step-Version {
             "Minor" { $minor++
                     $build = 0
                     break }
-            "Build" { $build++
+            default { $build++
                     break }
-            Default { 
-                    if ($patch -lt 0) { $patch = 1 } else { $patch++ }
-                    Write-Output (New-Object Version -ArgumentList $major, $minor, $build, $patch).ToString()
+            "Revison" { 
+                    if ($revision -lt 0) { $revision = 1 } else { $revision++ }
+                    Write-Output (New-Object Version -ArgumentList $major, $minor, $build, $revision).ToString()
                     return }
         }
 
