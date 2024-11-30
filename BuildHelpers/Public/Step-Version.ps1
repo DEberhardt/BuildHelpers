@@ -54,6 +54,7 @@ function Step-Version {
         $major = $Version.Major
         $minor = $Version.Minor
         $build = $Version.Build
+        $patch = $Version.Revision
 
         switch ($By) {
             "Major" { $major++
@@ -63,8 +64,12 @@ function Step-Version {
             "Minor" { $minor++
                     $build = 0
                     break }
-            Default { $build++
+            "Build" { $build++
                     break }
+            Default { 
+                    if ($patch -lt 0) { $patch = 1 } else { $patch++ }
+                    Write-Output (New-Object Version -ArgumentList $major, $minor, $build, $patch).ToString()
+                    return }
         }
 
         Write-Output (New-Object Version -ArgumentList $major, $minor, $build).ToString()
