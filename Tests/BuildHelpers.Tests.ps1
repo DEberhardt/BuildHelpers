@@ -74,11 +74,21 @@ Describe "Get-ProjectName PS$PSVersion" {
 
 Describe 'Step-Version' {
     Context 'By Param' {
+        It 'Should increment the Revision level' {
+            $result = Step-Version @Verbose 1.1.1 Revision
+            $result | Should Be 1.1.1.1
+        }
+
         It 'Should increment the Patch level' {
             $result = Step-Version @Verbose 1.1.1
             $result | Should Be 1.1.2
         }
-
+        
+        It 'Should increment the Build level' {
+            $result = Step-Version @Verbose 1.1.1
+            $result | Should Be 1.1.2
+        }
+        
         It 'Should increment the Minor level and set Patch level to 0' {
             $result = Step-Version @Verbose 1.1.1 Minor
             $result | Should Be 1.2.0
@@ -91,6 +101,16 @@ Describe 'Step-Version' {
     }
 
     Context 'By Pipeline' {
+            It 'Should increment the Revision level' {
+            $result = [version]"1.1.1" | Step-Version @Verbose Revision
+            $result | Should Be 1.1.1.1
+        }
+        
+        It 'Should increment the Patch level' {
+            $result = [version]"1.1.1" | Step-Version @Verbose
+            $result | Should Be 1.1.2
+        }
+
         It 'Should increment the Patch level' {
             $result = [version]"1.1.1" | Step-Version @Verbose
             $result | Should Be 1.1.2
