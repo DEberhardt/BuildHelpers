@@ -66,7 +66,7 @@ function Step-Version {
                     break }
             default { $build++
                     break }
-            "Revison" { 
+            "Revision" { 
                     if ($revision -lt 0) { $revision = 1 } else { $revision++ }
                     Write-Output (New-Object Version -ArgumentList $major, $minor, $build, $revision).ToString()
                     return }
